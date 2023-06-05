@@ -19,6 +19,7 @@ const uint8_t cs_SD = 15;
 const char* UTF8SJIS_file = "font/Utf8Sjis.tbl"; //UTF8 Shift_JIS 変換テーブルファイル名
 const char* Shino_Zen_Font_file = "font/shnmk16.bdf"; //全角東雲フォントファイル名を定義
 const char* Shino_Half_Font_file = "font/shnm8x16.bdf"; //半角東雲フォントファイル名を定義
+void Serial_Monitor_Dot_Display(uint16_t Len, uint8_t font_buf[][16]);
  
 enum { MaxTxt = 16 }; //MaxTxt = 文字列の最大数（半角数）
  

@@ -46,11 +46,11 @@ void SD_ShinonomeFNT_Pack::SD_Shinonome_Init(const char* UTF8SJIS_file, const ch
   SPI.setFrequency(40000000);
   SPI.setDataMode(SPI_MODE0); //SDカードはMODE0
   
-  SD.begin(_cs,40000000);
+  SD.begin(_cs, SPI, 40000000);
   
   Serial.println("card initialized.");
   _UtoS = SD.open(UTF8SJIS_file, FILE_READ);
-  if (_UtoS == NULL) {
+  if (!_UtoS.available()) {
     Serial.print(UTF8SJIS_file);
     Serial.println(" File not found");
     return;
@@ -59,7 +59,7 @@ void SD_ShinonomeFNT_Pack::SD_Shinonome_Init(const char* UTF8SJIS_file, const ch
     Serial.println(" File read OK!");
   }
   _SinoH = SD.open(Shino_Half_Font_file, FILE_READ);
-  if (_SinoH == NULL) {
+  if (!_SinoH.available()) {
     Serial.print(Shino_Half_Font_file);
     Serial.print(" File not found");
     return;
@@ -68,7 +68,7 @@ void SD_ShinonomeFNT_Pack::SD_Shinonome_Init(const char* UTF8SJIS_file, const ch
     Serial.println(" File read OK!");
   }
   _SinoZ = SD.open(Shino_Zen_Font_file, FILE_READ);
-  if (_SinoZ == NULL) {
+  if (!_SinoZ.available()) {
     Serial.print(Shino_Zen_Font_file);
     Serial.print(" File not found");
     return;
@@ -247,7 +247,7 @@ void SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_FHN(File ff, uint32_t addrs
   char c[85];
   if(ff){
     ff.seek(addrs);
-    ff.read(c,80); //4byte+"." -->5byte*16=80byte
+    ff.read(reinterpret_cast<uint8_t*>(c), 80); //4byte+"." -->5byte*16=80byte
     for (i=0; i<16; i++){
       if(c[j]>=0x61) c1 = (c[j]-0x61)+10;
       else c1 = c[j]-0x30;
@@ -279,7 +279,7 @@ void SD_ShinonomeFNT_Pack::SD_Flash_ShinonomeFNTread_Harf_FHN(File ff, uint32_t 
   
   if(ff){
     ff.seek(addrs);
-    ff.read(c,48); //2byte+"." -->3byte*16=48byte
+    ff.read(reinterpret_cast<uint8_t*>(c), 80); //2byte+"." -->3byte*16=48byte
     for (i=0; i<16; i++){
       if(c[j]>=0x61) c1 = (c[j]-0x61)+10;
       else c1 = c[j]-0x30;
