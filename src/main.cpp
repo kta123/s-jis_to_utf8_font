@@ -14,7 +14,7 @@
  miso = 12; //Master Input Slave Output
 */
  
-const uint8_t cs_SD = 15;
+const uint8_t cs_SD = 5;
  
 const char* UTF8SJIS_file = "font/Utf8Sjis.tbl"; //UTF8 Shift_JIS 変換テーブルファイル名
 const char* Shino_Zen_Font_file = "font/shnmk16.bdf"; //全角東雲フォントファイル名を定義
