@@ -37,19 +37,13 @@ Maintenance development of Font is /efont/.
 SD_ShinonomeFNT_Pack::SD_ShinonomeFNT_Pack(uint8_t cs, uint16_t MaxTxt)
   : _cs(cs), _MaxTxt(MaxTxt)
 {}
-enum { // ここを適切に変更する
-    sd_ss = 5,
-    sd_mosi = 23,
-    sd_miso = 19,
-    sd_sck = 18
-};
 //*******************東雲フォントライブラリ初期化*************************************************************
 void SD_ShinonomeFNT_Pack::SD_Shinonome_Init(const char* UTF8SJIS_file, const char* Shino_Half_Font_file, const char* Shino_Zen_Font_file)
 {
-  SPI.end();
-  SPI.begin( sd_sck, sd_miso, sd_mosi, sd_ss );
   Serial.begin(115200);
-  if ( !SD.begin( sd_ss, SPI ) )
+  while (!Serial) {
+  }
+  if ( !SD.begin() )
     {
        Serial.println("Card Mount Failed");
        return;
